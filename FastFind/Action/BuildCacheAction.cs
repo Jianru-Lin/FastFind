@@ -28,6 +28,21 @@ namespace FastFind
             private set;
         }
 
+        public bool IsWorking
+        {
+            get;
+            private set;
+        }
+
+        public BuildCacheAction()
+        {
+            this.Started += delegate(BuildCacheAction sender) { this.IsWorking = true; };
+            this.Stopped += delegate(BuildCacheAction sender) { this.IsWorking = false; };
+            this.Canceled += delegate(BuildCacheAction sender) { this.IsWorking = false; };
+            this.Error += delegate(BuildCacheAction sender) { this.IsWorking = false; };
+            this.Progress += delegate(BuildCacheAction sender) { };
+        }
+
         public override void Start()
         {
             Constrain.NotEmptyString(this.RootPath);

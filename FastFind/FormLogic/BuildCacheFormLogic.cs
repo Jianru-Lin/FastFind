@@ -114,6 +114,17 @@ namespace FastFind
 
             buildCacheForm.startBT.Click += new EventHandler(startBT_Click);
             buildCacheForm.stopBT.Click += new EventHandler(stopBT_Click);
+            buildCacheForm.FormClosing += new FormClosingEventHandler(buildCacheForm_FormClosing);
+        }
+
+        void buildCacheForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Constrain.NotNull(buildCacheAction);
+            if (buildCacheAction.IsWorking)
+            {
+                MessageBox.Show("正在构建缓存，如果要退出，请先取消，或者等待任务完成");
+                e.Cancel = true;
+            }
         }
 
         void initAction()
